@@ -1,4 +1,5 @@
 openai-whisper
 numpy
+torch
 
 
