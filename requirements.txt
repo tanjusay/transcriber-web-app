@@ -1,4 +1,4 @@
 openai-whisper
-audio
+numpy
 
 
