@@ -1,32 +1,27 @@
-import streamlit as st
 import whisper
+import streamlit as st
 
-model = whisper.load_model("base")
 
-st.title("Whisper Transcription App")
-st.header("Transcribe Audio to Text")
-
-audio_file = st.file_uploader("Upload an audio file", type=["mp3", "wav", "ogg"])
-
-if st.button("Transcribe"):
-    if audio_file is not None:
-        audio_data = audio_file.read()
-
-        result = model.transcribe(audio_data)
-
-        transcribed_text = result["text"]
-
-        st.subheader("Transcribed Text:")
-        st.write(transcribed_text)
-
-        with open("transcription.txt","w")as f:
-            f.write(transcribed_text)
-
-        st.success("Transcription complete and saved to 'transcription.txt'")
-
+def main():
+    st.set_page_config(page_title="AI Transcriber App")
+    st.header("🪶 AI Transcriber App")
+    
+    model = whisper.load_model("base")
+    
+    file = st.file_uploader("Upload a video file", type=["mp4"])
+    
+    if file is not None:
+        # Transcribe the video
+        result = model.transcribe(file)
+        
+        # Save the transcription to a text file
+        with open("transcription.txt", "w") as f:
+            f.write(result["text"])
+        
+        st.success("Transcription completed and saved to transcription.txt")
     else:
+        st.info("Please upload a video file (.mp4)")
+        
 
-        st.warning("Please upload an audio file to transcribe")
-
-
-            
+if __name__ == "__main__":
+    main()
